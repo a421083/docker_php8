@@ -20,18 +20,8 @@ RUN docker-php-ext-install gd
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mysqli
 RUN docker-php-ext-install sysvsem
-#RUN docker-php-ext-install zip
-#RUN pecl install igbinary && docker-php-ext-enable igbinary
-ENV IGBINARY_VERSION=3.0.1
-RUN set -xe \
-    && curl -fSL http://pecl.php.net/get/igbinary-${IGBINARY_VERSION}.tgz -o igbinary.tar.gz \
-    && mkdir -p /tmp/igbinary \
-    && tar -xf igbinary.tar.gz -C /tmp/igbinary --strip-components=1 \
-    && rm igbinary.tar.gz \
-    && docker-php-ext-configure /tmp/igbinary --enable-igbinary \
-    && docker-php-ext-install /tmp/igbinary \
-    && rm -r /tmp/igbinary 
-
+RUN docker-php-ext-install zip
+RUN pecl install igbinary && docker-php-ext-enable igbinary
   
 # compile phalcon
 #ENV PHALCON_VERSION=3.4.3
