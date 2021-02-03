@@ -34,15 +34,15 @@ RUN set -xe \
 
   
 # compile phalcon
-ENV PHALCON_VERSION=3.4.3
-RUN curl -fSL https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz -o cphalcon.tar.gz \
-    && mkdir -p cphalcon \
-    && tar -xf cphalcon.tar.gz -C cphalcon --strip-components=1 \
-    && rm cphalcon.tar.gz \
-    && cd cphalcon/build \
-    && sh install \
-    && rm -rf cphalcon \
-    && docker-php-ext-enable phalcon
+#ENV PHALCON_VERSION=3.4.3
+#RUN curl -fSL https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz #-o cphalcon.tar.gz \
+#    && mkdir -p cphalcon \
+#    && tar -xf cphalcon.tar.gz -C cphalcon --strip-components=1 \
+#    && rm cphalcon.tar.gz \
+#    && cd cphalcon/build \
+#    && sh install \
+#    && rm -rf cphalcon \
+#    && docker-php-ext-enable phalcon
 
 # add mongodb extension
 #RUN set -xe && \
