@@ -69,7 +69,7 @@ RUN set -xe \
     && mkdir -p /tmp/swoole \
     && tar -xf swoole.tar.gz -C /tmp/swoole --strip-components=1 \
     && rm swoole.tar.gz \
-    && docker-php-ext-configure /tmp/swoole --enable-swoole --enable-openssl --enable-coroutine\
+    && docker-php-ext-configure /tmp/swoole --enable-swoole --enable-openssl \
     && docker-php-ext-install /tmp/swoole \
     && rm -r /tmp/swoole
 
