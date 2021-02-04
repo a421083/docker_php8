@@ -34,12 +34,7 @@ RUN pecl install igbinary && docker-php-ext-enable igbinary
 #    && rm -rf cphalcon \
 #    && docker-php-ext-enable phalcon
 
-# add mongodb extension
-#RUN set -xe && \
-#    pecl install mongodb-1.3.4 && \
-#    docker-php-ext-enable mongodb
-
-ENV MONGODB_VERSION=1.7.2
+ENV MONGODB_VERSION=1.9.0
 # compile mongodb extension
 RUN set -xe \
     && curl -fSL http://pecl.php.net/get/mongodb-${MONGODB_VERSION}.tgz -o mongodb.tar.gz \
@@ -49,20 +44,8 @@ RUN set -xe \
     && docker-php-ext-configure /tmp/mongodb --enable-mongodb \
     && docker-php-ext-install /tmp/mongodb \
     && rm -r /tmp/mongodb
-        
-#ENV REDIS_VERSION=3.1.3
-#RUN cd /tmp \
-#    && pecl download redis-${REDIS_VERSION} \
-#    && tar zxvf redis-${REDIS_VERSION}.tgz \
-#    && cd redis-${REDIS_VERSION} \
-#    && phpize \
-#    && ./configure --enable-redis-igbinary \
-#    && make \
-#    && make install \
-#    && docker-php-ext-enable redis \
-#    && rm -rf /tmp/reids-${REDIS_VERSION}*
 
-ENV REDIS_VERSION=3.1.3
+ENV REDIS_VERSION=5.3.3
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps autoconf g++ make pcre-dev re2c \
     && curl -fSL http://pecl.php.net/get/redis-${REDIS_VERSION}.tgz -o redis.tar.gz \
@@ -74,22 +57,13 @@ RUN set -xe \
     && rm -r /tmp/redis
 
 
-#RUN pecl channel-update pecl.php.net && pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
-
-#RUN git clone https://github.com/tideways/php-profiler-extension.git /usr/src/php/ext/tideways \
-#    && cd /usr/src/php/ext/tideways\
-#    && docker-php-ext-install tideways 
-
-#RUN curl -sS https://getcomposer.org/installer | php \
-#    && mv composer.phar /usr/local/bin/composer
-
 RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
    && mv composer.phar /usr/local/bin/composer
 
 # compile a extension
-ENV SWOOLE_VERSION=4.4.8
+ENV SWOOLE_VERSION=4.6.2
 RUN set -xe \
     && curl -fSL http://pecl.php.net/get/swoole-${SWOOLE_VERSION}.tgz -o swoole.tar.gz \
     && mkdir -p /tmp/swoole \
@@ -105,16 +79,7 @@ RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.
             && mkdir build && cd build \
             && cmake .. \
             && cmake --build . --target install \
-            && cp -r /usr/local/lib64/* /usr/lib/ 
-            
-#    && git clone --branch ${PHP_AMQP_VERSION} https://github.com/pdezwart/php-amqp.git /tmp/php-amqp \
-#            && cd /tmp/php-amqp \
-#            && phpize \
-#            && ./configure \
-#            && make  \
-#            && make install \
-#            && make test \
-#    && docker-php-ext-enable amqp   
+            && cp -r /usr/local/lib64/* /usr/lib/    
 
 ENV PHP_AMQP_VERSION 1.10.2
 RUN set -ex \
@@ -135,22 +100,7 @@ RUN set -ex \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
-RUN set -xe &&  wget -q -O - http://www.xunsearch.com/scws/down/scws-1.2.1.tar.bz2 | tar xjf - &&\
-    cd scws-1.2.1 && \
-    sed -i '29i #endif '  ./libscws/xdb.c && \
-    sed -i '29i #include <sys/file.h> '  ./libscws/xdb.c && \
-    sed -i '29i #ifdef HAVE_FLOCK'  ./libscws/xdb.c && \
-     ./configure && make install && \
-    git clone https://github.com/hightman/scws.git /usr/local/php/ext/scws && \
-    cd /usr/local/php/ext/scws/phpext \
-    && phpize \
-    && ./configure \
-    && make  \
-    && make install \
-    && make test \
-    && docker-php-ext-enable scws 
-
-ENV APCU_VERSION=5.1.11
+ENV APCU_VERSION=5.1.19
 # compile apcu extension
 RUN set -xe \
     && apk add --no-cache --virtual .build-deps pcre-dev pcre \
