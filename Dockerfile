@@ -81,15 +81,15 @@ RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.
             && cmake --build . --target install \
             && cp -r /usr/local/lib64/* /usr/lib/    
 
-ENV PHP_AMQP_VERSION 1.10.2
-RUN set -ex \
-    && curl -fSl http://pecl.php.net/get/amqp-${PHP_AMQP_VERSION}.tgz -o amqp.tar.gz \
-    && mkdir -p /tmp/amqp \
-    && tar -xf amqp.tar.gz -C /tmp/amqp  --strip-components=1 \
-    && rm amqp.tar.gz \
-    && docker-php-ext-configure /tmp/amqp --enable-amqp \
-    && docker-php-ext-install /tmp/amqp \
-    && rm -r /tmp/amqp
+#ENV PHP_AMQP_VERSION 1.10.2
+#RUN set -ex \
+ #   && curl -fSl http://pecl.php.net/get/amqp-${PHP_AMQP_VERSION}.tgz -o amqp.tar.gz \
+#   && mkdir -p /tmp/amqp \
+#   && tar -xf amqp.tar.gz -C /tmp/amqp  --strip-components=1 \
+#    && rm amqp.tar.gz \
+#    && docker-php-ext-configure /tmp/amqp --enable-amqp \
+#    && docker-php-ext-install /tmp/amqp \
+#    && rm -r /tmp/amqp
 
 RUN set -ex \
     && docker-php-ext-configure gd \
