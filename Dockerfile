@@ -91,14 +91,14 @@ RUN git clone --branch ${RABBITMQ_VERSION} https://github.com/alanxz/rabbitmq-c.
 #    && docker-php-ext-install /tmp/amqp \
 #    && rm -r /tmp/amqp
 
-RUN set -ex \
-    && docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/include/freetype2/freetype \
-        --with-jpeg-dir=/usr/include \
-        --with-png-dir=/usr/include \
-    && docker-php-ext-install soap gd bcmath zip opcache iconv  pdo pcntl sockets shmop xmlrpc \
-    && rm -rf /var/cache/apk/* \
-    && rm -rf /tmp/*
+#RUN set -ex \
+#    && docker-php-ext-configure gd \
+#        --with-freetype-dir=/usr/include/freetype2/freetype \
+#        --with-jpeg-dir=/usr/include \
+#        --with-png-dir=/usr/include \
+#    && docker-php-ext-install soap gd bcmath zip opcache iconv  pdo pcntl sockets shmop xmlrpc \
+#    && rm -rf /var/cache/apk/* \
+#    && rm -rf /tmp/*
 
 ENV APCU_VERSION=5.1.19
 # compile apcu extension
